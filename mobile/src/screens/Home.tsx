@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react"
+import { useState, useCallback } from "react"
 import { View, Text, ScrollView, Alert } from "react-native"
-import { useNavigation } from "@react-navigation/native"
+import { useNavigation, useFocusEffect } from "@react-navigation/native"
 import { generateRangeBetweenDates } from "../utils/generate-range-between-dates"
 import { api } from "../lib/axios"
 import dayjs from "dayjs"
@@ -40,9 +40,11 @@ export function Home() {
     }
   }
 
-  useEffect(() => {
-    fetchData()
-  }, [])
+  useFocusEffect(
+    useCallback(() => {
+      fetchData()
+    }, [])
+  )
 
   if (loading) {
     return <Loading />
